@@ -8,13 +8,39 @@ from tools import search_tool
 
 def create_debater_agent(persona: str) -> AgentExecutor:
     """
-    Creates a debater agent with a specific persona.
+    Creates a sophisticated debater agent with tool-calling capabilities.
+    
+    This function constructs a debate agent that can engage in structured arguments
+    using GPT-4 Turbo and has access to web search tools for evidence gathering.
+    The agent is designed to participate in formal debates with specific personas
+    and can access current information to support its arguments.
     
     Args:
-        persona (str): The personality and role description for the debater
-        
+        persona (str): A detailed system prompt defining the debater's personality,
+            arguing style, and strategic approach. This should include instructions
+            on how the agent should behave, what tone to use, and any specific
+            debate strategies or characteristics that define this debater's role
+            (e.g., "proposition" vs "opposition").
+    
     Returns:
-        AgentExecutor: A configured agent executor ready for debate
+        AgentExecutor: A fully configured agent executor that can:
+            - Process debate topics and history
+            - Generate coherent arguments based on the given persona
+            - Use web search tools to find supporting evidence
+            - Maintain context throughout multi-turn debates
+            - Follow the debate format and rules embedded in the persona
+    
+    Example:
+        >>> persona = "You are a confident proposition debater who always..."
+        >>> debater = create_debater_agent(persona)
+        >>> result = debater.invoke({
+        ...     "topic": "Should AI be regulated?",
+        ...     "debate_history": "Previous arguments here..."
+        ... })
+    
+    Note:
+        The agent requires valid OpenAI API credentials and Tavily API key
+        to be set in the environment for full functionality.
     """
     # Initialize ChatOpenAI model with GPT-4 Turbo
     llm = ChatOpenAI(model="gpt-4-turbo")
