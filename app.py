@@ -134,3 +134,24 @@ workflow.add_edge("judge", END)
 
 # Compile the graph
 app = workflow.compile()
+
+
+if __name__ == "__main__":
+    # Initialize the GraphState with a sample topic and configuration
+    initial_state = {
+        "topic": "Should artificial intelligence be regulated by government agencies?",
+        "debate_history": [],
+        "turn_number": 0,
+        "winner": "",
+        "max_turns": 4
+    }
+    
+    print("🎯 Starting Debate!")
+    print(f"📋 Topic: {initial_state['topic']}")
+    print(f"🔄 Max Turns: {initial_state['max_turns']}")
+    print("=" * 80)
+    
+    # Stream the debate execution and print each event
+    for event in app.stream(initial_state):
+        print(f"📡 Event: {event}")
+        print("-" * 40)
