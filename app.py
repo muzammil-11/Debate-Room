@@ -56,3 +56,25 @@ def proposition_node(state: GraphState) -> dict:
         "debate_history": updated_debate_history,
         "turn_number": updated_turn_number
     }
+
+
+def should_continue(state: GraphState) -> str:
+    """
+    Determines whether the debate should continue or proceed to judging.
+    
+    This function acts as a conditional router in the debate graph workflow,
+    checking if the maximum number of turns has been exceeded and directing
+    the flow accordingly.
+    
+    Args:
+        state (GraphState): Current debate state containing turn_number and max_turns
+    
+    Returns:
+        str: "judge" if turn_number > max_turns, indicating the debate should end
+             and proceed to judging; "proposition" if the debate should continue
+             with the next proposition argument
+    """
+    if state["turn_number"] > state["max_turns"]:
+        return "judge"
+    else:
+        return "proposition"
